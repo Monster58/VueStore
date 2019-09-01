@@ -9,6 +9,7 @@ import app from './App.vue'
 Vue.component(Header.name, Header)
 
 const vm = new Vue({
-    el: '#app',
-    render: c => c(app)
-})
+        el: '#app',
+        render: c => c(app)
+    })
+    //
