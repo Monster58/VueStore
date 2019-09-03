@@ -1,9 +1,11 @@
 <template>
   <div class="app">
     <!-- 顶部 -->
-    <mt-header fixed title="Vue商城"></mt-header>
-	<h1>hello world</h1>
-	<router-view></router-view>
+	<mt-header fixed title="Vue商城"></mt-header>
+	
+	<transition>
+		<router-view></router-view>
+	</transition>
 
     <!-- 底部菜单 -->
     <nav class="mui-bar mui-bar-tab">
@@ -34,5 +36,23 @@
 <style scoped>
     .app {
         padding-top: 40px;
+        overflow-x: hidden;
+    }
+    
+    .v-enter {
+        opacity: 0;
+        transform: translateX(100%);
+        /* position: absolute; */
+    }
+    
+    .v-leave-to {
+        opacity: 0;
+        transform: translateX(-100%);
+        position: absolute;
+    }
+    
+    .v-enter-active,
+    .v-leave-active {
+        transition: all .2s ease-in;
     }
 </style>
