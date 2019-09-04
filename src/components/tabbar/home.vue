@@ -5,13 +5,14 @@
         <img :src="item.img" alt />
       </mt-swipe-item>
     </mt-swipe>
+    <router-view></router-view>
     <div class="mui-content">
       <ul class="mui-table-view mui-grid-view mui-grid-9">
         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
-          <a href="#">
+          <router-link to="/home/news">
             <img src="../../images/menu/menu1.png" alt />
             <div class="mui-media-body">新闻资讯</div>
-          </a>
+          </router-link>
         </li>
         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-4">
           <a href="#">
