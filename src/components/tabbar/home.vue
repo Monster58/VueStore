@@ -62,7 +62,7 @@ export default {
   methods: {
     getBannerUrl() {
       this.axios
-        .get("http://www.liulongbin.top:3005/api/getlunbo")
+        .get("api/getlunbo")
         .then(res => {
           this.bannerUrlList = res.data.message;
         });
