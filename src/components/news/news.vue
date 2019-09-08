@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="newslist">
     <ul class="mui-table-view">
       <li class="mui-table-view-cell mui-media" v-for="item in newsList" :key="item.id">
-        <a href="javascript:;">
+        <router-link :to="'/home/newsinfo/'+item.id">
           <img class="mui-media-object mui-pull-left" :src="item.img_url" />
           <div class="mui-media-body">
             {{item.title}}
             <p class="mui-ellipsis">{{item.zhaiyao}}</p>
             <div class="date-click">
-              <span>时间：{{item.add_time}}</span>
+              <span>时间：{{item.add_time | dateFormat}}</span>
               <span>点击次数：{{item.click}}</span>
             </div>
           </div>
-        </a>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -62,18 +62,22 @@ export default {
 </script>
 
 <style scoped>
+.newslist {
+  width: 100%;
+  overflow: hidden;
+}
 .mui-table-view .mui-media-object {
   max-width: 81px;
   height: 63px;
 }
 .date-click {
+  color: rgb(121, 121, 121);
   display: flex;
   justify-content: space-between;
   font-size: 12px;
 }
 .mui-media-body {
   text-overflow: ellipsis;
-  /*禁止换行显示*/
   white-space: nowrap;
 }
 </style>

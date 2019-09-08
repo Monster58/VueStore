@@ -36,6 +36,7 @@
 <style scoped>
     .app {
         padding-top: 40px;
+        padding-bottom: 3.2rem;
         overflow-x: hidden;
     }
     

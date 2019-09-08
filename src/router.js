@@ -6,6 +6,8 @@ import member from './components/tabbar/member.vue'
 import shopcar from './components/tabbar/shopcar.vue'
 import search from './components/tabbar/search.vue'
 import news from './components/news/news.vue'
+import newsinfo from './components/news/newsinfo.vue'
+import img from './components/img/img.vue'
 
 
 var router = new VueRouter({
@@ -21,7 +23,9 @@ var router = new VueRouter({
         { path: '/member', component: member },
         { path: '/shopcar', component: shopcar },
         { path: '/search', component: search },
-        { path: '/home/news', component: news }
+        { path: '/home/news', component: news },
+        { path: '/home/img', component: img },
+        { path: '/home/newsinfo/:id', component: newsinfo }
     ],
     linkActiveClass: 'mui-active' //默认覆盖路由高亮的类默认叫做router-link-active
 })
