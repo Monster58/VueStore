@@ -21,3 +21,18 @@
 
 ## 注意点
 - mui icon扩展图标需要额外引入另外一个css和图标文件
+
+## 补充
+### 懒加载
+用的是`mint-ui`的`lazy load`
+>不能分块导入，只能全部导入，不然懒加载图标不生效，并且要引入样式文件。
+具体用法如下：
+
+```js
+import Mint from "mint-ui"
+import "mint-ui/lib/style.css"
+Vue.config.productionTip = false
+Vue.use(Mint)
+```
+
+

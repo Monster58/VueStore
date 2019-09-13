@@ -42,7 +42,12 @@ export default {
           }
 
           // console.log(this.commentData)
-        });
+        },rej => {
+          console.log('err')
+        })
+        .catch(() => {
+          Toast('评论获取失败')
+        })
     },
     getMore() {
       this.pageIndex++;
@@ -57,6 +62,7 @@ export default {
           .then(res => {
             if (res.data.status == 0) {
               Toast("评论成功");
+              this.commentText = ''
               this.getComments();
             }
           })
