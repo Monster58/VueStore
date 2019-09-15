@@ -1,6 +1,6 @@
 <template>
   <div class="goods-box">
-    <div class="goods-item" v-for="item in goodsList" :key="item.id">
+    <div class="goods-item" v-for="item in goodsList" :key="item.id" @click="goInfo(item.id)">
       <div class="goods-img">
         <img :src="item.img_url" alt />
       </div>
@@ -54,6 +54,12 @@ export default {
     getMore() {
       this.pageIndex++;
       this.getGoodsList();
+    },
+    goInfo(id){
+      this.$router.push({
+        name: 'goodsinfo',
+        params: { id }
+      })
     }
   },
   created() {
@@ -86,6 +92,7 @@ export default {
       .title {
         h3 {
           font-size: 0.8em;
+          padding: 0 4px;
         }
       }
       .price {
