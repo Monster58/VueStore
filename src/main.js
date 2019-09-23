@@ -6,6 +6,7 @@ import './lib/mui/css/icons-extra.css'
 
 
 
+
 //导入路由
 import VueRouter from 'vue-router'
 // 安装路由
@@ -55,6 +56,9 @@ import Mint from "mint-ui"
 import "mint-ui/lib/style.css"
 // Vue.config.productionTip = false
 Vue.use(Mint)
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 
 Vue.filter('dateFormat', function(dateStr, pattern = "YYYY-MM-DD HH:mm:ss") {
     return moment(dateStr).format(pattern)

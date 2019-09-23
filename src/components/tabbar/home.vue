@@ -1,10 +1,6 @@
 <template>
   <div>
-    <mt-swipe>
-      <mt-swipe-item v-for="item in bannerUrlList" :key="item.id">
-        <img :src="item.img" alt />
-      </mt-swipe-item>
-    </mt-swipe>
+    <swiper :bannerUrlList="indexBannerUrlList" :isfull="true"></swiper>
     <router-view></router-view>
     <div class="mui-content">
       <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -50,11 +46,15 @@
 </template>
 
 <script>
+import swiper from '../childComponents/swiper.vue'
 export default {
   data() {
     return {
-      bannerUrlList: []
+      indexBannerUrlList: []
     };
+  },
+  components: {
+    swiper
   },
   created() {
     this.getBannerUrl();
@@ -64,7 +64,7 @@ export default {
       this.axios
         .get("api/getlunbo")
         .then(res => {
-          this.bannerUrlList = res.data.message;
+          this.indexBannerUrlList = res.data.message;
         });
     }
   }
@@ -72,13 +72,6 @@ export default {
 </script>
 
 <style scoped>
-.mint-swipe {
-  height: 129px;
-}
-.mint-swipe-item img {
-  width: 100%;
-  height: auto;
-}
 .mui-grid-view.mui-grid-9 {
   border: none;
   background-color: #fff;

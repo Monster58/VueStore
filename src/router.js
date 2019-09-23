@@ -11,6 +11,7 @@ import img from './components/img/img.vue'
 import imginfo from './components/img/imginfo.vue'
 import goods from './components/goods/goods.vue'
 import goodsInfo from './components/goods/goodsInfo.vue'
+import goodsInt from './components/goods/goodsintroduce.vue'
 
 
 var router = new VueRouter({
@@ -31,7 +32,8 @@ var router = new VueRouter({
         { path: '/home/img/imginfo/:id', component: imginfo },
         { path: '/home/newsinfo/:id', component: newsinfo },
         { path: '/home/goods', component: goods },
-        { name: 'goodsinfo', path: '/home/goods/goodsinfo/:id', component: goodsInfo }
+        { name: 'goodsinfo', path: '/home/goods/goodsinfo/:id', component: goodsInfo },
+        { name: 'goodsInt', path: '/home/goods/goodsinfo/goodsInt/:id', component: goodsInt }
     ],
     linkActiveClass: 'mui-active' //默认覆盖路由高亮的类默认叫做router-link-active
 })

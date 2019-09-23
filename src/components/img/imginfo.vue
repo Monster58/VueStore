@@ -21,7 +21,7 @@
 
 <script>
 //api/getimageinfo/:imgid  图片详情
-//api/getthumimages/:imgid
+//api/getthumimages/:imgid 缩略图
 import VuePreview from "vue-preview";
 import comment from "../childComponents/comment.vue";
 export default {
