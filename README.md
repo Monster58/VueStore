@@ -34,5 +34,13 @@ import "mint-ui/lib/style.css"
 Vue.config.productionTip = false
 Vue.use(Mint)
 ```
+### js方法
+- domobject.getBoundingClientRect()
+> 这个方法返回一个矩形对象，包含四个属性：left、top、right、bottom。分别表示元素各边与页面上边和左边的距离。
+ domobject.getBoundingClientRect().top；//元素上边距离页面上边的距离
+ domobject.getBoundingClientRect().right//元素右边距离页面左边的距离
+ domobject.getBoundingClientRect().bottom；//元素下边距离页面上边的距离
+ domobject.getBoundingClientRect().top；//元素左边距离页面左边的距离
+
 
 

@@ -20,10 +20,16 @@
           <div class="row2">
             购买数量：
             <addButton></addButton>
+            <transition
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter">
+              <div v-show="addCarBallFlag" ref="ball" class="ball"></div>
+            </transition>
           </div>
           <div class="row3">
             <button type="button" class="mui-btn mui-btn-success">立即购买</button>
-            <button type="button" class="mui-btn mui-btn-danger">加入购物车</button>
+            <button @click="addShopCar" type="button" class="mui-btn mui-btn-danger">加入购物车</button>
           </div>
         </div>
       </div>
@@ -57,7 +63,8 @@ export default {
     return {
       id: this.$route.params.id,
       imageList: [],
-      goodsInfo: {}
+      goodsInfo: {},
+      addCarBallFlag: false
     };
   },
   methods: {
@@ -80,6 +87,27 @@ export default {
         name: 'goodsInt',
         params: id
       })
+    },
+    addShopCar(){
+      this.addCarBallFlag = !this.addCarBallFlag
+    },
+    beforeEnter(el) {
+      el.style.transform = 'translate(0,0)'
+      // el.style.opacity  = '1'
+    },
+    enter(el,done){
+      el.offsetWidth
+      const ballPosition = this.$refs.ball.getBoundingClientRect()
+      const badgePosition = document.querySelector('#badge').getBoundingClientRect()
+      const xClient = badgePosition.left - ballPosition.left
+      const yClient = badgePosition.top - ballPosition.top
+      el.style.transform = `translate(${xClient}px,${yClient}px)`
+      el.style.transition = 'all .5s cubic-bezier(.51,-0.06,1,.58)'
+      // el.style.opacity  = '0'
+      done()
+    },
+    afterEnter(el){
+      this.addCarBallFlag = !this.addCarBallFlag
     }
   },
   components: {
@@ -115,5 +143,21 @@ i {
 }
 button {
   margin-bottom: 1rem;
+}
+.row2 {
+  position: relative;
+}
+.ball {
+  width: 14px;
+  height: 14px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  left: 8rem;
+  top: .6rem;
+  z-index: 99;
+}
+.mui-card {
+  overflow: visible;
 }
 </style>
