@@ -19,7 +19,7 @@
           </div>
           <div class="row2">
             购买数量：
-            <addButton></addButton>
+            <addButton :maxQuantity="goodsInfo.stock_quantity" @getNum="getAddButtonVal"></addButton>
             <transition
             @before-enter="beforeEnter"
             @enter="enter"
@@ -64,7 +64,8 @@ export default {
       id: this.$route.params.id,
       imageList: [],
       goodsInfo: {},
-      addCarBallFlag: false
+      addCarBallFlag: false,
+      numBoxVal: 1
     };
   },
   methods: {
@@ -108,6 +109,9 @@ export default {
     },
     afterEnter(el){
       this.addCarBallFlag = !this.addCarBallFlag
+    },
+    getAddButtonVal(num){
+      this.numBoxVal = num
     }
   },
   components: {
@@ -118,7 +122,7 @@ export default {
   created() {
     this.getImages();
     this.getGoodsInfo();
-  }
+  },
 };
 </script>
 
