@@ -39,9 +39,6 @@ export default {
         }
       });
     },
-    conMax() {
-      console.log(this.maxQuantity);
-    }
   },
   watch: {
     num: function(newval, oldval) {
@@ -50,7 +47,6 @@ export default {
   },
   mounted() {
     this.initAddButton();
-    this.conMax();
   }
 };
 </script>

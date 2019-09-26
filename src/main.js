@@ -14,6 +14,54 @@ Vue.use(VueRouter)
 import router from './router.js'
 
 
+import vuex from 'vuex'
+Vue.use(vuex)
+let shoppingTrolley = JSON.parse(localStorage.getItem('shoppingTrolley')) || []
+const store = new vuex.Store({
+    state: {
+        /*数据模型
+        {id: goodsId, amount: 商品数量, goodsPrice: 商品价格, selected: 默认为true}
+        */
+        shoppingTrolley: shoppingTrolley
+    },
+    mutations: {
+        addShopTro(state, goodsObj) {
+            console.log(goodsObj)
+                //判断商品是否存在
+            let flag = true
+            state.shoppingTrolley.some(item => {
+                console.log(item.id, goodsObj.id)
+                if (item.id == goodsObj.id) {
+                    console.log(item, goodsObj.id)
+                    console.log('已有商品')
+                    item.amount += goodsObj.amount
+                    flag = false
+                }
+            })
+            console.log('没有商品')
+            if (flag) {
+                console.log('添加商品')
+                state.shoppingTrolley.push(goodsObj)
+                console.log('添加成功')
+            }
+            localStorage.setItem('shoppingTrolley', JSON.stringify(state.shoppingTrolley))
+        }
+    },
+    getters: {
+        getShopTroAmount(state) {
+            let goodsAmount = 0
+            if (state.shoppingTrolley.length != 0) {
+                state.shoppingTrolley.forEach(item => {
+                    goodsAmount += item.amount
+                })
+            }
+            console.log(state.shoppingTrolley)
+            return goodsAmount
+        }
+    }
+})
+
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
@@ -66,5 +114,6 @@ Vue.filter('dateFormat', function(dateStr, pattern = "YYYY-MM-DD HH:mm:ss") {
 const vm = new Vue({
     el: '#app',
     render: c => c(app),
-    router
+    router,
+    store
 })

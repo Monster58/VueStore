@@ -5,10 +5,12 @@
 </template>
 
 <script>
+//api/goods/getshopcarlist/:ids    ids: 44,45,46
 export default {
 
 }
 </script>
+
 
 <style>
 

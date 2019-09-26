@@ -91,6 +91,13 @@ export default {
     },
     addShopCar(){
       this.addCarBallFlag = !this.addCarBallFlag
+      let goodsObj = {
+        id: this.goodsInfo.id,
+        amount: parseInt(this.numBoxVal),
+        goodsPrice: this.goodsInfo.sell_price,
+        selected: true
+      }
+      this.$store.commit('addShopTro', goodsObj)
     },
     beforeEnter(el) {
       el.style.transform = 'translate(0,0)'
