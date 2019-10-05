@@ -26,25 +26,44 @@ const store = new vuex.Store({
     },
     mutations: {
         addShopTro(state, goodsObj) {
-            console.log(goodsObj)
-                //判断商品是否存在
+            //判断商品是否存在
             let flag = true
             state.shoppingTrolley.some(item => {
-                console.log(item.id, goodsObj.id)
                 if (item.id == goodsObj.id) {
-                    console.log(item, goodsObj.id)
                     console.log('已有商品')
                     item.amount += goodsObj.amount
                     flag = false
                 }
             })
-            console.log('没有商品')
             if (flag) {
                 console.log('添加商品')
                 state.shoppingTrolley.push(goodsObj)
                 console.log('添加成功')
             }
             localStorage.setItem('shoppingTrolley', JSON.stringify(state.shoppingTrolley))
+        },
+        increaseAmount(state, id) {
+            state.shoppingTrolley.some(val => {
+                if (val.id == id) {
+                    val.amount++
+                }
+                localStorage.setItem('shoppingTrolley', JSON.stringify(state.shoppingTrolley))
+            })
+        },
+        reduceAmount(state, id) {
+            state.shoppingTrolley.some(val => {
+                if (val.id == id) {
+                    val.amount--
+                }
+                localStorage.setItem('shoppingTrolley', JSON.stringify(state.shoppingTrolley))
+            })
+        },
+        delgoods(state, id) {
+            state.shoppingTrolley.some((item, i) => {
+                if (item.id == id) {
+                    state.shoppingTrolley.splice(i, 1)
+                }
+            })
         }
     },
     getters: {
@@ -57,8 +76,37 @@ const store = new vuex.Store({
             }
             console.log(state.shoppingTrolley)
             return goodsAmount
+        },
+        getGoodsList(state) {
+            return state.shoppingTrolley
+        },
+        getSelectNum(state) {
+            let num = 0
+            for(let i in state.shoppingTrolley) {
+                if(state.shoppingTrolley[i].selected == true) {
+                    num++
+                }
+            }
+            return num
+        },
+        getAllPrice(state) {
+            let num = 0
+            for(let i in state.shoppingTrolley) {
+                if(state.shoppingTrolley[i].selected == true) {
+                    num+= state.shoppingTrolley[i].goodsPrice*state.shoppingTrolley[i].amount
+                }
+            }
+            return num
         }
-    }
+    },
+    // actions: {
+    //     getGoodsInfoAct(context, goodsObj) {
+    //         console.log(goodsObj)
+    //         this.axios(`api/goods/getshopcarlist/${goodsObj.id}`)
+    //         //api/goods/getshopcarlist/:ids    ids: 44,45,46
+    //         // context.commit('addShopTro',goodsObj)
+    //     }
+    // }
 })
 
 
@@ -77,7 +125,7 @@ moment.suppressDeprecationWarnings = true
 import VuePreview from 'vue-preview'
 // defalut install
 Vue.use(VuePreview)
-    // with parameters install
+// with parameters install
 Vue.use(VuePreview, {
     mainClass: 'pswp--minimal--dark',
     barsSize: { top: 0, bottom: 0 },
@@ -108,7 +156,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
-Vue.filter('dateFormat', function(dateStr, pattern = "YYYY-MM-DD HH:mm:ss") {
+Vue.filter('dateFormat', function (dateStr, pattern = "YYYY-MM-DD HH:mm:ss") {
     return moment(dateStr).format(pattern)
 })
 const vm = new Vue({
@@ -116,4 +164,4 @@ const vm = new Vue({
     render: c => c(app),
     router,
     store
-})
+}) 

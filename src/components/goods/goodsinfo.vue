@@ -20,10 +20,7 @@
           <div class="row2">
             购买数量：
             <addButton :maxQuantity="goodsInfo.stock_quantity" @getNum="getAddButtonVal"></addButton>
-            <transition
-            @before-enter="beforeEnter"
-            @enter="enter"
-            @after-enter="afterEnter">
+            <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
               <div v-show="addCarBallFlag" ref="ball" class="ball"></div>
             </transition>
           </div>
@@ -57,7 +54,10 @@
 //api/goods/getinfo/:id 商品详情
 import swiper from "../childComponents/swiper.vue";
 import addButton from "../childComponents/addbutton.vue";
-import comment from '../childComponents/comment.vue'
+import comment from "../childComponents/comment.vue";
+import { Toast } from "mint-ui";
+
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -65,10 +65,14 @@ export default {
       imageList: [],
       goodsInfo: {},
       addCarBallFlag: false,
-      numBoxVal: 1
+      numBoxVal: 1,
+      
     };
   },
   methods: {
+    // ...mapActions([
+    //   'getGoodsInfoAct'
+    // ]),
     getImages() {
       this.axios(`api/getthumimages/${this.id}`).then(res => {
         if (res.status == 200 && res.data.status == 0) {
@@ -83,42 +87,55 @@ export default {
         }
       });
     },
-    goGoodsInt(id){
+    goGoodsInt(id) {
       this.$router.push({
-        name: 'goodsInt',
+        name: "goodsInt",
         params: id
-      })
+      });
     },
-    addShopCar(){
-      this.addCarBallFlag = !this.addCarBallFlag
+    addShopCar() {
+      this.addCarBallFlag = !this.addCarBallFlag;
       let goodsObj = {
         id: this.goodsInfo.id,
         amount: parseInt(this.numBoxVal),
         goodsPrice: this.goodsInfo.sell_price,
+        stock_quantity: this.goodsInfo.stock_quantity,
         selected: true
-      }
-      this.$store.commit('addShopTro', goodsObj)
+      };
+      this.axios(`api/goods/getshopcarlist/${goodsObj.id}`).then(res => {
+        if (res.status == 200 && res.data.status == 0) {
+          goodsObj.thumb_path = res.data.message[0].thumb_path;
+          goodsObj.title = res.data.message[0].title;
+          this.$store.commit("addShopTro", goodsObj);
+        } else {
+          Toast("加入购物车失败，请稍后再试");
+        }
+      });
+
+      // this.getGoodsInfoAct(goodsObj)
     },
     beforeEnter(el) {
-      el.style.transform = 'translate(0,0)'
+      el.style.transform = "translate(0,0)";
       // el.style.opacity  = '1'
     },
-    enter(el,done){
-      el.offsetWidth
-      const ballPosition = this.$refs.ball.getBoundingClientRect()
-      const badgePosition = document.querySelector('#badge').getBoundingClientRect()
-      const xClient = badgePosition.left - ballPosition.left
-      const yClient = badgePosition.top - ballPosition.top
-      el.style.transform = `translate(${xClient}px,${yClient}px)`
-      el.style.transition = 'all .5s cubic-bezier(.51,-0.06,1,.58)'
+    enter(el, done) {
+      el.offsetWidth;
+      const ballPosition = this.$refs.ball.getBoundingClientRect();
+      const badgePosition = document
+        .querySelector("#badge")
+        .getBoundingClientRect();
+      const xClient = badgePosition.left - ballPosition.left;
+      const yClient = badgePosition.top - ballPosition.top;
+      el.style.transform = `translate(${xClient}px,${yClient}px)`;
+      el.style.transition = "all .5s cubic-bezier(.51,-0.06,1,.58)";
       // el.style.opacity  = '0'
-      done()
+      done();
     },
-    afterEnter(el){
-      this.addCarBallFlag = !this.addCarBallFlag
+    afterEnter(el) {
+      this.addCarBallFlag = !this.addCarBallFlag;
     },
-    getAddButtonVal(num){
-      this.numBoxVal = num
+    getAddButtonVal(num) {
+      this.numBoxVal = num;
     }
   },
   components: {
@@ -129,7 +146,7 @@ export default {
   created() {
     this.getImages();
     this.getGoodsInfo();
-  },
+  }
 };
 </script>
 
@@ -165,7 +182,7 @@ button {
   border-radius: 50%;
   position: absolute;
   left: 8rem;
-  top: .6rem;
+  top: 0.6rem;
   z-index: 99;
 }
 .mui-card {
