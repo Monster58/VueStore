@@ -59,11 +59,9 @@ export default {
   },
   methods: {
     delgoods(id){
-      console.log(id)
       this.$store.commit('delgoods', id)
     },
     commitSelect(id) {
-      console.log(id)
       this.$store.commit('changeGoodsSelected', id)
     }
   },

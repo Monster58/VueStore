@@ -1,4 +1,4 @@
-## 自学前端路上的第一个小项目
+## 自学前端路上的第一个vue项目
 
  - 下载之后先安装依赖包
  - 终端下运行 **`npm install`**
@@ -43,4 +43,20 @@ Vue.use(Mint)
  domobject.getBoundingClientRect().top；//元素左边距离页面左边的距离
 
 
+# 开启Apache的gzip压缩
+> 要让Apache支持gzip功能，要用到deflate_Module和headers_Moudule。打开apache的配置文件httpd.conf,大约在105行左右，找到以下两行内容：（不是连续的）。然后将#去掉取消注释，表示开启gzip压缩功能。
+`#LoadModule deflate_module modules/mod_deflate.so`
+`#LoadModule headers_module modules/mod_headers.so`
+> 开启后还需要在httpd.conf文件的最后添加以下内容即可：
+```php
+<IfModule deflate_module>
+    #必须的，就像一个开关一样，告诉apache对传输到浏览器的内容进行压缩
+    SetOutputFilter DEFLATE
+    DeflateCompressionLeavel 9
+</IfModule>
+```
+>最少需要加以上内容Kaineng生效。`DeflateCompressionLevel`表示压缩级别，值从1到9，值越大压缩体积越小。
+
+# 使用ngrok将本机映射为一个外网的Web服务器
+> 由于默认使用的美国的服务器进行中间转接，所以访问速度非常慢，访问时客气用FQ软件，提高网页打开速度.
 

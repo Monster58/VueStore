@@ -1,7 +1,11 @@
 <template>
   <div class="app">
     <!-- 顶部 -->
-    <mt-header fixed title="Vue商城"></mt-header>
+    <mt-header fixed title="Vue商城">
+      <div slot="left">
+        <mt-button v-show="flag" @click="hisGo" icon="back">返回</mt-button>
+      </div>
+    </mt-header>
 
     <transition>
       <router-view></router-view>
@@ -32,6 +36,31 @@
 </template>
 
 <script>
+export default {
+  data(){
+    return {
+      flag: true
+    }
+  },
+  created(){
+    console.log(this.$route.path)
+    this.flag = this.$route.path == '/home' ? false : true
+  },
+  methods: {
+    hisGo(){
+      this.$router.go(-1)
+    }
+  },
+  watch: {
+    '$route.path': function(nval){
+      if(nval != '/home' ){
+        this.flag = true
+      } else {
+        this.flag = false
+      }
+    }
+  }
+}
 </script>
 
 
@@ -60,6 +89,6 @@
 }
 
 .app {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 </style>
