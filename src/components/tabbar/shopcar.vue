@@ -4,7 +4,7 @@
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
           <div class="switch">
-            <mt-switch></mt-switch>
+            <mt-switch v-model="getSelect[item.id]" @change="commitSelect(item.id)"></mt-switch>
           </div>
           <div class="img">
             <img :src="item.thumb_path" alt />
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    {{this.getGoodsList}}
+    {{this.getSelect}}
   </div>
 </template>
 
@@ -61,10 +61,14 @@ export default {
     delgoods(id){
       console.log(id)
       this.$store.commit('delgoods', id)
+    },
+    commitSelect(id) {
+      console.log(id)
+      this.$store.commit('changeGoodsSelected', id)
     }
   },
   computed: {
-    ...mapGetters(["getGoodsList","getSelectNum","getAllPrice"])
+    ...mapGetters(["getGoodsList","getSelectNum","getAllPrice","getSelect"])
   },
   created() {
     this.goodsInfo = this.getGoodsList

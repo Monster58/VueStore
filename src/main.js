@@ -64,6 +64,13 @@ const store = new vuex.Store({
                     state.shoppingTrolley.splice(i, 1)
                 }
             })
+        },
+        changeGoodsSelected(state, id) {
+            state.shoppingTrolley.some(item =>　{
+                if(item.id == id) {
+                    item.selected = !item.selected
+                }
+            })
         }
     },
     getters: {
@@ -97,16 +104,15 @@ const store = new vuex.Store({
                 }
             }
             return num
+        },
+        getSelect(state) {
+            let obj = {}
+            state.shoppingTrolley.forEach(item => {
+                obj[item.id] = item.selected
+            })
+            return obj
         }
     },
-    // actions: {
-    //     getGoodsInfoAct(context, goodsObj) {
-    //         console.log(goodsObj)
-    //         this.axios(`api/goods/getshopcarlist/${goodsObj.id}`)
-    //         //api/goods/getshopcarlist/:ids    ids: 44,45,46
-    //         // context.commit('addShopTro',goodsObj)
-    //     }
-    // }
 })
 
 
